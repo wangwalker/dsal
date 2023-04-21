@@ -2,11 +2,26 @@ package tree
 
 import "testing"
 
-// Tests lt of Key
-func TestKeyLt(t *testing.T) {
+// Tests lt of Key when the type is string.
+func TestStringKeyLt(t *testing.T) {
 	// GIVEN
-	k1 := Key{"a", 1}
-	k2 := Key{"b", 2}
+	k1 := Key[string]{"a", 1}
+	k2 := Key[string]{"b", 2}
+
+	// WHEN
+	lt := k1.lt(k2)
+
+	// THEN
+	if !lt {
+		t.Errorf("k1.lt(k2) = %v, want true", lt)
+	}
+}
+
+// Tests lt of Key when the type is int.
+func TestIntKeyLt(t *testing.T) {
+	// GIVEN
+	k1 := Key[int]{1, 1}
+	k2 := Key[int]{2, 2}
 
 	// WHEN
 	lt := k1.lt(k2)
@@ -19,12 +34,12 @@ func TestKeyLt(t *testing.T) {
 
 func TestStringBtree(t *testing.T) {
 	// GIVEN
-	root := &Node{
-		keys: []Key{{"e", 0}, {"k", 30}},
-		children: []*Node{
-			{keys: []Key{{"a", 1}, {"b", 2}, {"v", 3}}, isLeaf: true, level: 2},
-			{keys: []Key{{"fd", 4}, {"gd", 5}, {"h2", 6}}, isLeaf: true, level: 2},
-			{keys: []Key{{"m1", 7}, {"m2", 8}, {"root", 9}}, isLeaf: true, level: 2}},
+	root := &Node[string]{
+		keys: []Key[string]{{"e", 0}, {"k", 30}},
+		children: []*Node[string]{
+			{keys: []Key[string]{{"a", 1}, {"b", 2}, {"v", 3}}, isLeaf: true, level: 2},
+			{keys: []Key[string]{{"fd", 4}, {"gd", 5}, {"h2", 6}}, isLeaf: true, level: 2},
+			{keys: []Key[string]{{"m1", 7}, {"m2", 8}, {"root", 9}}, isLeaf: true, level: 2}},
 		isLeaf: false,
 		level:  1,
 	}
@@ -32,15 +47,15 @@ func TestStringBtree(t *testing.T) {
 	traverse(root)
 
 	// WHEN
-	root.Insert(Key{"food", 10})
-	root.Insert(Key{"godd", 11})
-	root.Insert(Key{"hi", 12})
-	root.Insert(Key{"internet", 13})
-	root.Insert(Key{"j", 14})
-	root.Insert(Key{"kitty", 15})
-	root.Insert(Key{"loop", 16})
-	root.Insert(Key{"moon", 17})
-	root.Insert(Key{"string", 18})
+	root.Insert(Key[string]{"food", 10})
+	root.Insert(Key[string]{"godd", 11})
+	root.Insert(Key[string]{"hi", 12})
+	root.Insert(Key[string]{"internet", 13})
+	root.Insert(Key[string]{"j", 14})
+	root.Insert(Key[string]{"kitty", 15})
+	root.Insert(Key[string]{"loop", 16})
+	root.Insert(Key[string]{"moon", 17})
+	root.Insert(Key[string]{"string", 18})
 
 	// THEN
 	t.Log("traversing the tree after inserting food, godd, hi, internet, j, kitty, loop, moon, string")
