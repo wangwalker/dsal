@@ -34,9 +34,9 @@ func TestIntKeyLt(t *testing.T) {
 
 func TestStringBtree(t *testing.T) {
 	// GIVEN
-	root := &Node[string]{
+	root := &BTNode[string]{
 		keys: []Key[string]{{"e", 0}, {"k", 30}},
-		children: []*Node[string]{
+		children: []*BTNode[string]{
 			{keys: []Key[string]{{"a", 1}, {"b", 2}, {"v", 3}}, isLeaf: true, level: 2},
 			{keys: []Key[string]{{"fd", 4}, {"gd", 5}, {"h2", 6}}, isLeaf: true, level: 2},
 			{keys: []Key[string]{{"m1", 7}, {"m2", 8}, {"root", 9}}, isLeaf: true, level: 2}},
