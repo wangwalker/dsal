@@ -164,3 +164,45 @@ func TestDeleteSkipListNode(t *testing.T) {
 		t.Errorf("head.right.down.Search(3) = %v, want nil", head.right.down.Search(3))
 	}
 }
+
+func TestTheMostLowListContainsAllNodes(t *testing.T) {
+	// GIVEN
+	head := NewSkipList(1, "a")
+	head.SetDicisionMaker(&mockDicisionMaker{true})
+	head = head.Insert(2, "b")
+	head = head.Insert(3, "c")
+	head = head.Insert(4, "d")
+	head = head.Insert(5, "e")
+
+	// WHEN
+	p := head
+	for p.down != nil {
+		p = p.down
+	}
+	data := make(map[int]string)
+	for p != nil {
+		data[p.key] = p.value.(string)
+		p = p.right
+	}
+
+	// THEN
+	if len(data) != 5 {
+		t.Errorf("len(data) = %v, want 5", len(data))
+	}
+	if data[1] != "a" {
+		t.Errorf("data[1] = %v, want \"a\"", data[1])
+	}
+	if data[2] != "b" {
+		t.Errorf("data[2] = %v, want \"b\"", data[2])
+	}
+	if data[3] != "c" {
+		t.Errorf("data[3] = %v, want \"c\"", data[3])
+	}
+	if data[4] != "d" {
+		t.Errorf("data[4] = %v, want \"d\"", data[4])
+	}
+	if data[5] != "e" {
+		t.Errorf("data[5] = %v, want \"e\"", data[5])
+	}
+
+}
